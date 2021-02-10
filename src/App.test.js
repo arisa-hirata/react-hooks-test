@@ -1,8 +1,39 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('App', () => {
+  test('renders App component', async () => {
+    render(<App />);
+
+    // wait for the user to resolve
+    // needs only be used in our special case
+    await screen.findByText(/Signed in as/);
+
+    expect(screen.queryByText(/Searches for JavaScript/)).toBeNull();
+
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: 'JavaScript' },
+    });
+
+    expect(screen.getByText(/Searches for JavaScript/)).toBeInTheDocument();
+  });
+});
+
+describe('Search', () => {
+  test('calls the onChange callback handler', () => {
+    const onChange = jest.fn();
+
+    render(
+      <Search value="" onChange={onChange}>
+        Search:
+      </Search>
+    );
+
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: 'JavaScript' },
+    });
+
+    expect(onChange).toHeveBeenCalledTimes(1);
+  });
 });
