@@ -8,36 +8,36 @@ import App from './App';
 jest.mock('axios');
 
 describe('App', () => {
-  test('fetches stories from an API and displays them', async () => {
-    const stories = [
-      { objectID: '1', title: 'Hello' },
-      { objectID: '2', title: 'React' },
-    ];
+  // test('fetches stories from an API and displays them', async () => {
+  //   const stories = [
+  //     { objectID: '1', title: 'Hello' },
+  //     { objectID: '2', title: 'React' },
+  //   ];
 
-    const promise = Promise.resolve({ data: { hits: stories } });
+  //   const promise = Promise.resolve({ data: { hits: stories } });
 
-    axios.get.mockImplementationOnce(() => promise);
+  //   axios.get.mockImplementationOnce(() => promise);
 
-    render(<App />);
+  //   render(<App />);
 
-    await userEvent.click(screen.getByRole('button'));
+  //   await userEvent.click(screen.getByRole('button'));
 
-    await act(() => promise);
+  //   await act(() => promise);
 
-    expect(screen.getAllByRole('listitem')).toHaveLength(2);
-  });
+  //   expect(screen.getAllByRole('listitem')).toHaveLength(2);
+  // });
 
-  test('fetches stories from an API and fails', async () => {
-    axios.get.mockImplementationOnce(() =>
-      Promise.reject(new Error())
-    );
+  // test('fetches stories from an API and fails', async () => {
+  //   axios.get.mockImplementationOnce(() =>
+  //     Promise.reject(new Error())
+  //   );
 
-    render(<App />);
+  //   render(<App />);
 
-    await userEvent.click(screen.getByRole('button'));
+  //   await userEvent.click(screen.getByRole('button'));
 
-    const message = await screen.findByText(/Something went wrong/);
+  //   const message = await screen.findByText(/Something went wrong/);
 
-    expect(message).toBeInTheDocument();
-  });
+  //   expect(message).toBeInTheDocument();
+  // });
 });
