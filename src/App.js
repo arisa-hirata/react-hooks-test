@@ -16,7 +16,6 @@ function App() {
       setStories(result.data.hits);
     } catch (error) {
       setError(error);
-
     }
   }
 
